@@ -93,6 +93,46 @@
         text-align: center;
       }
     }
+    @media (max-width: 768px) {
+  header {
+    padding: 15px;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    display: block;
+    width: 90%;
+    text-align: center;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  article {
+    padding: 10px;
+  }
+
+  article h2 {
+    font-size: 18px;
+  }
+
+  article p {
+    font-size: 14px;
+  }
+
+  footer {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -109,7 +149,12 @@
     <a href="contact.html">Contact</a>
   </nav>
 
-  <main>
+  <main><main id="news-container">
+  <h2>Latest Sports News</h2>
+</main>
+<div id="news-container"></div>
+
+
     <article>
       <img src="images/team-a-championship.jpg" alt="Team A wins">
       <h2>Team A Wins the Championship</h2>
@@ -149,5 +194,7 @@
       document.documentElement.scrollTop = 0;
     }
   </script>
+<script src="script.js"></script>
+
 </body>
 </html>

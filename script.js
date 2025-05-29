@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey = 'da657371639f4f5d9d73a54604099822';
-  const url = `https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=10&apiKey=${apiKey}`;
+  const apiKey ='da657371639f4f5d9d73a54604099822';
+  const url = `https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=100&apiKey=${apiKey}`;
 
   const container = document.getElementById('news-container');
 

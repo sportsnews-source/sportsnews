@@ -12,7 +12,7 @@ async function fetchNews() {
     }
 
     let html = '';
-    data.results.forEach(article => {
+    data.results.slice(0,100).forEach(article => {
       html += `
         <div class="news-item">
           <h3>${article.title}</h3>

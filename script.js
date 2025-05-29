@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const apiKey ='da657371639f4f5d9d73a54604099822';
+  const apiKey ='67b59c0f55a14312b5c42e06c36ab910';
   const url = `https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=100&apiKey=${apiKey}`;
 
   const container = document.getElementById('news-container');

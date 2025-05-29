@@ -3,7 +3,7 @@ const newsContainer = document.getElementById('news-container');
 
 async function fetchNews() {
   try {
-    const response = await fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en`);
+    const response = await fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en&country=gb,it,de,fr,es,ke`);
     const data = await response.json();
 
     if (!data.results || data.results.length === 0) {

@@ -1,61 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const apiKey ='67b59c0f55a14312b5c42e06c36ab910';
-  const url = `https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=100&apiKey=${apiKey}`;
+const apiKey = 'pub_43627d9b09cb41ada3bf570194289fa6'; // Replace with your API key
+const newsContainer = document.getElementById('news-container');
 
-  const container = document.getElementById('news-container');
+async function fetchNews() {
+  try {
+    const response = await fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en`);
+    const data = await response.json();
 
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch news');
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.articles.length === 0) {
-        container.innerHTML = '<p>No news articles found.</p>';
-        return;
-      }
+    if (!data.results || data.results.length === 0) {
+      newsContainer.innerHTML = '<p>No sports news found.</p>';
+      return;
+    }
 
-      data.articles.forEach(article => {
-        const articleDiv = document.createElement('div');
-        articleDiv.style.background = '#fff';
-        articleDiv.style.marginBottom = '20px';
-        articleDiv.style.padding = '15px';
-        articleDiv.style.borderRadius = '8px';
-        articleDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-
-        const img = document.createElement('img');
-        img.src = article.urlToImage || 'default.jpg';
-        img.alt = article.title;
-        img.style.maxWidth = '100%';
-        img.style.borderRadius = '5px';
-        img.style.marginBottom = '10px';
-
-        const title = document.createElement('h2');
-        title.textContent = article.title;
-
-        const desc = document.createElement('p');
-        desc.innerHTML = `<strong>${new Date(article.publishedAt).toLocaleDateString()}</strong> - ${article.description || 'No description available.'}`;
-
-        const link = document.createElement('a');
-        link.href = article.url;
-        link.textContent = 'Read more';
-        link.target = '_blank';
-        link.style.display = 'inline-block';
-        link.style.marginTop = '10px';
-        link.style.color = '#0066cc';
-
-        articleDiv.appendChild(img);
-        articleDiv.appendChild(title);
-        articleDiv.appendChild(desc);
-        articleDiv.appendChild(link);
-
-        container.appendChild(articleDiv);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching news:', error);
-      container.innerHTML = '<p>Error loading news. Please try again later.</p>';
+    let html = '';
+    data.results.forEach(article => {
+      html += `
+        <div class="news-item">
+          <h3>${article.title}</h3>
+          <p><strong>${article.pubDate}</strong> - ${article.description}</p>
+          <a href="${article.link}" target="_blank">Read more</a>
+        </div>
+      `;
     });
-});
+
+    newsContainer.innerHTML = html;
+  } catch (error) {
+    newsContainer.innerHTML = '<p>Error loading news. Please try again later.</p>';
+    console.error(error);
+  }
+}
+
+fetchNews();

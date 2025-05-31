@@ -1,32 +1,23 @@
-const apiKey = 'pub_dfd2235b33dd4c7db502894294859e1d';
-const newsContainer = document.getElementById('news-container');
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    const apiKey = 'pub_dfd2235b33dd4c7db502894294859e1d';
 
-async function fetchNews() {
-  try {
-    const response = await fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en&country=gb,it,de,fr,es,ke`);
-    const data = await response.json();
+    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en&country=ke`;
 
-    if (!data.results || data.results.length === 0) {
-      newsContainer.innerHTML = '<p>No sports news found.</p>';
-      return;
+    try {
+      const response = await fetch("https://news-proxy.<shiulierick>.workers.dev");
+      const data = await response.json();
+
+      return new Response(JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 200
+      });
+    } catch (error) {
+      return new Response(JSON.stringify({ error: 'Failed to fetch news.' }), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 500
+      });
     }
-
-    let html = '';
-    data.results.slice(0,100).forEach(article => {
-      html += `
-        <div class="news-item">
-          <h3>${article.title}</h3>
-          <p><strong>${article.pubDate}</strong> - ${article.description}</p>
-          <a href="${article.link}" target="_blank">Read more</a>
-        </div>
-      `;
-    });
-
-    newsContainer.innerHTML = html;
-  } catch (error) {
-    newsContainer.innerHTML = '<p>Error loading news. Please try again later.</p>';
-    console.error(error);
   }
-}
-
-fetchNews();
+};

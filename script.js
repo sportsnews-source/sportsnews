@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
     const apiKey = 'pub_e4730d9e76cb435c9e121d40ca635e11';
 
-    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en&country=ke`;
+    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en`;
 
     try {
       const response = await fetch("https://news-proxy.<shiulierick>.workers.dev");

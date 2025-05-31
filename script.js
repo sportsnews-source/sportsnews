@@ -1,23 +1,38 @@
-export default {
-  async fetch(request) {
-    const url = new URL(request.url);
-    const apiKey = 'pub_e4730d9e76cb435c9e121d40ca635e11';
+document.addEventListener("DOMContentLoaded", () => {
+  const newsContainer = document.getElementById("news-container");
 
-    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en`;
-
+  async function fetchNews() {
     try {
-      const response = await fetch("https://news-proxy.<shiulierick>.workers.dev");
+      const response = await fetch('https://news-proxy.shiulierick.workers.dev'); // ✅ your actual Worker endpoint
       const data = await response.json();
 
-      return new Response(JSON.stringify(data), {
-        headers: { 'Content-Type': 'application/json' },
-        status: 200
-      });
-    } catch (error) {
-      return new Response(JSON.stringify({ error: 'Failed to fetch news.' }), {
-        headers: { 'Content-Type': 'application/json' },
-        status: 500
-      });
+      if (data.results && Array.isArray(data.results)) {
+        newsContainer.innerHTML = ''; // Clear existing news
+
+        data.results.slice(0, 10).forEach(article => {
+          const articleDiv = document.createElement('article');
+
+          articleDiv.innerHTML = `
+            <h2>${article.title}</h2>
+            <p><strong>${article.pubDate}</strong></p>
+            <p>${article.description || ''}</p>
+            <a href="${article.link}" target="_blank">Read more</a>
+            <hr/>
+          `;
+
+          newsContainer.appendChild(articleDiv);
+        });
+      } else {
+        newsContainer.innerHTML = "<p>No news found.</p>";
+      }
+    } catch (err) {
+      console.error(err);
+      newsContainer.innerHTML = "<p>Error loading news.</p>";
     }
   }
-};
+
+  fetchNews();
+
+  // Auto-refresh every 5 minutes (optional)
+  setInterval(fetchNews, 5 * 60 * 1000);
+});

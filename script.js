@@ -17,7 +17,7 @@ async function fetchNews() {
   container.innerHTML = "<p>Loading news...</p>";
 
   try {
-    const response = await fetch("https://news-proxy.shulierick.workers.dev/");
+    const response = await fetch("https://news-proxy.shiulierick.workers.dev/");
     const result = await response.json();
 
     if (result.status === "success" && result.results && result.results.length > 0) {

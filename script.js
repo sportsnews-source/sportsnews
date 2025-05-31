@@ -1,7 +1,7 @@
 export default {
   async fetch(request) {
     const url = new URL(request.url);
-    const apiKey = 'pub_dfd2235b33dd4c7db502894294859e1d';
+    const apiKey = 'pub_e4730d9e76cb435c9e121d40ca635e11';
 
     const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&category=sports&language=en&country=ke`;
 
